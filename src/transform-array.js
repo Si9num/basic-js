@@ -5,23 +5,31 @@ module.exports = function transform(arr) {
         throw Error("Not array")
 
     };
-        let result=[];
-        let arr1 = ["--discard-next","--discard-prev","--double-next","--double-prev"];
-        for (let i = 0; i < arr.length; i++) {
-            if (arr[i] == "--discard-next") {
-                arr.splice(i,2);
+    let res = [];
+    res = arr;
+        for (let i = 0; i < res.length; i++) {
+            if (res[i] === "--discard-next" ) {
+                if (i < arr.length ) {
+                    res.splice(i, 2, null);
+                }
             }
-            else if (arr[i] == "--discard-prev") {
-                arr.splice(i-1,2)
+            else if (res[i] === "--discard-prev") {
+                if (i>0){
+                res.splice(i - 1, 1, null)
             }
-            else if (arr[i] == "--double-next") {
-                arr.splice(i, 1);
-                arr[i + 1] == arr[i];
             }
-            else if (arr[i] == "--double-prev") {
-                arr.splice(i, 1);
-                arr[i - 1] == arr[i];
+            else if (res[i] === "--double-next" && res[i + 3] !== "--discard-prev") {
+                if (i < arr.length )
+                res.splice(i, 1, res[i+1]);
+               
             }
+            else if (res[i] === "--double-prev" && res[i - 2] !== "--discard-next") {
+                if (i > 0)
+                res.splice(i, 1, res[i - 1]);
+                
+            }
+         
         }
-        return arr;
+        res = res.filter(fil => fil !== null && fil !== undefined && fil !== "--discard-next" && fil !== "--discard-prev" && fil !== "--double-next" && fil !== "--double-prev");
+        return res
     };
