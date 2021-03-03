@@ -6,7 +6,9 @@ module.exports = function transform(arr) {
 
     };
     let res = [];
-    res = arr;
+    for (let r = 0; r <= arr.length; r++) {
+        res.push(arr[r])
+    }
         for (let i = 0; i < res.length; i++) {
             if (res[i] === "--discard-next" ) {
                 if (i < arr.length ) {
